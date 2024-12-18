@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const userController = require("../controllers/users.controller");
-const userRepository = require("../repositories/users.repository");
+const authenticateToken = require("../middlewares/auth.middleware");
 
-router.get("/users", userRepository.getUser);
-router.post("/users", userController.createUser);
-router.post("/login", userController.login);
+router.post("/auth/register", userController.createUser);
+router.post("/auth/login", userController.login);
+router.get("/profile", authenticateToken, userController.getUserById);
 
 module.exports = router;
